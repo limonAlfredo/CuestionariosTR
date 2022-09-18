@@ -30,9 +30,9 @@ function updateChart() {
 
 	$.each(data, function(key, value){
 		if(i<10)
-			dataPoints.push({label: value[0], y: parseInt(value[1])});
+			dataPoints.push({label: value[0], y: parseInt(value[1],10)});
 		i++;
-		var data1 = {no: i, alumno: value[0], puntos: parseInt(value[1])};
+		var data1 = {no: i, alumno: value[0], puntos: parseInt(value[1],10)};
 		container.innerHTML += template(data1);
 
 	});
