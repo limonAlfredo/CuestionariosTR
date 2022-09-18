@@ -66,7 +66,7 @@ router.get("/", function(req, res){
 					//console.log(pregs);
 					try{
 						res.status(200);
-						return res.render("app/home", {preguntas: pregs});	
+						return;	
 					}
 					catch(error){
 						console.log("Error: ", error);
@@ -575,7 +575,7 @@ router.route("/contestar")
 		}
 		else{
 			console.log("No se pudo obtener el res.locals.user._id");
-			return;
+			return res.status(404);
 		}
 
 	});
@@ -655,7 +655,7 @@ function MostrarGrafica(isRedirect, callback){
 				}
 				catch(error){
 					console.log("Error: ", error);
-					return;
+					return callback({status: 404, ok: false, err:"Erroor"});
 				}
 			}
 			else{
@@ -665,7 +665,7 @@ function MostrarGrafica(isRedirect, callback){
 				}
 				catch(error){
 					console.log("Error: ", error);
-					return;
+					return callback({status: 404, ok: false, err:"Erroor"});
 				}
 			}
 	});
@@ -691,4 +691,4 @@ router.get("/grafica", function(req, res){
 	});
 });
 
-module.exports = router;
+var module.exports = router;

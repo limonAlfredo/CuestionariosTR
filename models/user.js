@@ -89,4 +89,4 @@ user_schema.virtual("password_confirmation").get(function(){
 //La colección se define en plural: Users
 var User = mongoose.model("User", user_schema);
 
-module.exports.User = User;
+var module.exports.User = User;

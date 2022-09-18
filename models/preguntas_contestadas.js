@@ -19,4 +19,4 @@ var preg_cont_schema = new Schema({
 
 var Pregunta_Contestada = mongoose.model("Pregunta_Contestada", preg_cont_schema);
 
-module.exports = Pregunta_Contestada;
+var module.exports = Pregunta_Contestada;

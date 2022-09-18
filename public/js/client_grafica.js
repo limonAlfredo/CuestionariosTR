@@ -37,7 +37,7 @@ function updateChart() {
 
 	});
 
-	chart = new CanvasJS.Chart("chartContainer",{
+	var chart = new CanvasJS.Chart("chartContainer",{
 		animationEnabled: false,
 		theme: "light2",
 		title:{
