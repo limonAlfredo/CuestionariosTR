@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 var uri = 'mongodb://localhost:27017/deñ';
 
 mongoose.connect(uri, {
-  useMongoClient: true,
+  useMongoClient: true
   /* other options */
 });
 // Get Mongoose to use the global promise library

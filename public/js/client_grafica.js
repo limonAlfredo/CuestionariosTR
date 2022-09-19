@@ -29,8 +29,9 @@ function updateChart() {
 	var template = Handlebars.compile(source);
 
 	$.each(data, function(key, value){
-		if(i<10)
+		if(i<10){
 			dataPoints.push({label: value[0], y: parseInt(value[1],10)});
+		}
 		i++;
 		var data1 = {no: i, alumno: value[0], puntos: parseInt(value[1],10)};
 		container.innerHTML += template(data1);
@@ -55,7 +56,7 @@ function updateChart() {
 			showInLegend: true, 
 			legendMarkerColor: "grey",
 			legendText: "Puntaje de alumnos",
-			dataPoints : dataPoints,
+			dataPoints : dataPoints
 		}]
 	});
 	chart.render();

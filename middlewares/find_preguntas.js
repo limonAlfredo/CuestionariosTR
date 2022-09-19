@@ -9,12 +9,10 @@ module.exports = function (req, res, next){
 			res.locals.pregunta = preg;
 			return next();
 		}
-		else{
-			//Colocar código para Finalizar el ciclo de solicitud/respuestas
+		//Colocar código para Finalizar el ciclo de solicitud/respuestas
 			//Bug potencial aquí: solicitud colgada. CORREGIDO
 			//https://expressjs.com/es/guide/routing.html
 			console.log("preg null");
 			res.redirect("/app");
-		}
 	});
 }

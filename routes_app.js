@@ -50,7 +50,7 @@ router.get("/", function(req, res){
 			              { $project: { puntos: 1, _id: 0 } } //campos que regresa
 			           ],
 					as: "pregunta_contestada"
-				}},
+				}}
 			])
 			.sort({pregunta_contestada: 'asc', opcion4: 'desc'}) //-----ORDENAMIENTO AQUI  <<<<<<<<<<<<<<<<<<<<<<<<<----------
 			.exec(function(err, pregs){
@@ -366,7 +366,6 @@ router.get("/contestar/:id", function(req, res){
 					res.status(200);
 					return res.redirect("/app");
 				}
-				else{
 					// Buscar pregunta y Mostrar al Usuario
 					// para que la conteste
 					Pregunta.findById(req.params.id)
@@ -376,13 +375,12 @@ router.get("/contestar/:id", function(req, res){
 							res.status(200);
 							return res.render("app/preguntas/contestar");
 						}
-						else{
 							console.log("Preg null contestar");
 							res.status(200);
 							return res.redirect("/app");
-						}
+
 					});
-				}
+
 			}
 			else{
 				console.log("Err Pregunta_Contestada: " + err);
@@ -445,7 +443,7 @@ router.route("/contestar")
 						var bndIscorrecta = false;
 						//console.log("isPreguntaContestada: " + isPreguntaContestada);
 						
-						if(isPreguntaContestada == false){
+						if(isPreguntaContestada === false){
 							Pregunta.findById(req.fields.id)
 								.exec(function(err, preg){
 								if(preg != null){
@@ -478,7 +476,7 @@ router.route("/contestar")
 													for (var i = results.length - 1; i >= 0; i--) {
 														puntaje = 10 - results[i].cantidad;
 													}
-													if(puntaje < 0) puntaje = 0;
+													if(puntaje < 0) {puntaje = 0;}
 
 													var data = {
 														pregunta: req.fields.id,
@@ -494,19 +492,10 @@ router.route("/contestar")
 															if(ft == null){
 																return res.redirect(200, "/app");
 															}
-															else if(ft.ok){
-																const {status, ok, message} = ft //Destructuring ES6
-																//console.log('aqui 1 ' + status);
-																//res.status(401).location('/foo').end();
-																//res.redirect("/app");
-																//return res.redirect(status, "/app");
-																return res.redirect("/app");
-																//res.status(status).location("/app").end(); //Tambien ...json({ok, message}) ES6
-															}else{
 																const {status, ok, err} = ft //Destructuring ES6
 																//console.log('aqui 2 ' + status);
 																return res.status(status).json({ok: false, err: err}); //Tambien ...json({ok, err}) ES6
-															}
+															
 														});
 													}
 													catch(error){
@@ -537,18 +526,10 @@ router.route("/contestar")
 												if(ft == null){
 													return res.redirect(200, "/app");
 												}
-												else if(ft.ok){
-													const {status, ok, message} = ft; //Destructuring ES6
-													//console.log('aqui 3 ' + status);
-													//return res.status(status).location("/app").end();
-													//return res.redirect(status, "/app");
-													return res.redirect("/app");
-													//res.status(200).location("/app").end(); //Tambien ...json({ok, message}) ES6
-												}else{
+
 													const {status, ok, err} = ft; //Destructuring ES6
 													//console.log('aqui 4 ' + ft);
 													return res.status(status).json({ok: false, err: err}); //Tambien ...json({ok, err}) ES6
-												}
 											});
 										}
 										catch(error){
@@ -638,8 +619,9 @@ function MostrarGrafica(isRedirect, callback){
 					//console.log(puntajes[i]._id[0].username);
 					//console.log(puntajes[i].puntaje);
 					strJsonData += "[\"" + puntajes[i]._id[0].username + "\"," + puntajes[i].puntaje + "]";
-					if(i < puntajes.length - 1)
+					if(i < puntajes.length - 1){
 						strJsonData += ",";
+					}
 				}
 				strJsonData += "]";
 
@@ -650,7 +632,7 @@ function MostrarGrafica(isRedirect, callback){
 
 				try{
 					client.publish("update grafica", JSON.stringify(preg_contJSON));
-					if(isRedirect) callback({status: 200, ok: true, message: 'Se envió actualización de gráfica.'});
+					if(isRedirect) {callback({status: 200, ok: true, message: 'Se envió actualización de gráfica.'});}
 					//return res.redirect("/app");
 				}
 				catch(error){
@@ -661,7 +643,7 @@ function MostrarGrafica(isRedirect, callback){
 			else{
 				console.log("No se obtuvo el Puntaje por Usuario.");
 				try{
-					if(isRedirect) return callback({status: 500, ok: false, err: "No se obtuvo el Puntaje por Usuario"}); //return res.redirect("/app");
+					if(isRedirect){ return callback({status: 500, ok: false, err: "No se obtuvo el Puntaje por Usuario"});} //return res.redirect("/app");
 				}
 				catch(error){
 					console.log("Error: ", error);
@@ -677,17 +659,10 @@ function MostrarGrafica(isRedirect, callback){
 router.get("/grafica", function(req, res){
 	console.log("Mostrando Gráficas....")
 	MostrarGrafica(true, (ft) =>{
-		if(ft.ok){
-			const {status, ok, message} = ft; //Destructuring ES6
-			console.log('aqui 5 ' + status);
-			//return res.status(200).location("/app").end();
-			return res.render("app/preguntas/grafica");
-			//res.status(200).location("/app").end(); //Tambien ...json({ok, message}) ES6
-		}else{
 			const {status, ok, err} = ft; //Destructuring ES6
 			console.log('aqui 6 ' + ft);
 			return res.status(status).json({ok: ok, err: err}); //Tambien ...json({ok, err}) ES6
-		}
+		
 	});
 });
 
